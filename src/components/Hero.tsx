@@ -63,9 +63,16 @@ export function Hero() {
               move from design to running code without tool switching.
             </p>
             <p className="max-w-2xl text-base text-[var(--text-secondary)]">
-              The original UML-first teaching approach is preserved and rebuilt
-              on a modern desktop stack that stays practical for schools and
-              offline usage.
+              This modern rewrite keeps the original UML-first teaching
+              approach created by{" "}
+              <a
+                className="underline decoration-[var(--accent)] underline-offset-4 hover:text-[var(--accent-strong)]"
+                href="https://unimozer.fisch.lu/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Bob Fisch
+              </a>.
             </p>
 
             <div className="mt-6">

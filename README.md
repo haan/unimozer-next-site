@@ -28,6 +28,17 @@ npm run check:links
 
 `check:links` validates the required stable alias download URLs and release fallback.
 
+## Screenshot Processing
+
+```bash
+npm run images:process
+```
+
+Current processing pipeline generates optimized carousel assets for the UML screenshot:
+
+- `src/assets/screenshots/feature-uml-diagram.webp`
+- `src/assets/screenshots/feature-uml-diagram.jpg` (fallback for non-WebP browsers)
+
 ## Build
 
 ```bash

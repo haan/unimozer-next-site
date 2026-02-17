@@ -1,44 +1,49 @@
 import { useState } from "react";
-import featureJavaEditor from "../assets/screenshots/feature-java-editor.svg";
 import featureObjectBench from "../assets/screenshots/feature-object-bench.svg";
 import featureStructogram from "../assets/screenshots/feature-structogram.svg";
-import featureUmlDiagram from "../assets/screenshots/feature-uml-diagram.svg";
+import featureUmlDiagramFallback from "../assets/screenshots/feature-uml-diagram.jpg";
+import featureUmlDiagram from "../assets/screenshots/feature-uml-diagram.webp";
+import featureWizardFallback from "../assets/screenshots/feature-wizard.jpg";
+import featureWizard from "../assets/screenshots/feature-wizard.webp";
 
 interface Slide {
   title: string;
   caption: string;
   src: string;
+  webpSrc?: string;
   alt: string;
 }
 
 const slides: Slide[] = [
   {
-    title: "UML-to-code connection",
+    title: "Large UML Diagram Overview",
     caption:
-      "Students can design classes visually and immediately see how structure maps to Java source.",
-    src: featureUmlDiagram,
-    alt: "Placeholder screenshot showing the UML class diagram workspace in Unimozer Next.",
+      "This view shows the class structure on one canvas, making relationships and responsibilities easy to discuss before editing code.",
+    src: featureUmlDiagramFallback,
+    webpSrc: featureUmlDiagram,
+    alt: "Unimozer Next screenshot showing a large UML class diagram with linked classes including BouncyBall, HeavyBall, Ball, Balls, DrawPanel, and MainFrame.",
   },
   {
-    title: "Java editor in context",
+    title: "Guided Code Generation",
     caption:
-      "Teachers can discuss syntax and design choices while keeping the diagram and code workflows aligned.",
-    src: featureJavaEditor,
-    alt: "Placeholder screenshot showing Java source editor panels in Unimozer Next.",
+      "Students can use built-in wizards to create classes, constructors, fields, and methods without memorizing Java syntax first.",
+    src: featureWizardFallback,
+    webpSrc: featureWizard,
+    alt: "Unimozer Next screenshot showing a wizard that helps students generate Java class elements directly from guided form steps.",
   },
   {
-    title: "Structogram guidance",
+    title: "Structogram Method View",
     caption:
-      "Algorithm flow can be taught with a structured visual representation before or during code writing.",
+      "Algorithms can be explained step by step using a visual structogram for the selected method.",
     src: featureStructogram,
-    alt: "Placeholder screenshot showing structogram view used for algorithm planning.",
+    alt: "Unimozer Next screenshot showing the structogram view for method flow planning.",
   },
   {
-    title: "Object bench experiments",
+    title: "Object Bench Interaction",
     caption:
-      "Learners can instantiate classes and call methods quickly to understand runtime behavior.",
+      "Learners can create objects and call methods to observe runtime behavior directly.",
     src: featureObjectBench,
-    alt: "Placeholder screenshot showing object bench and method call interactions.",
+    alt: "Unimozer Next screenshot showing object bench interaction with object instances and method calls.",
   },
 ];
 
@@ -62,7 +67,7 @@ export function FeatureCarousel() {
             <p className="section-kicker">Screenshots</p>
             <h2 className="section-title mt-2">Feature Highlights</h2>
             <p className="section-subtitle mt-2">
-              Practical screenshots focused on classroom workflows.
+              See how diagrams, code, and object interaction work together.
             </p>
           </div>
           <div className="flex gap-2">
@@ -108,12 +113,27 @@ export function FeatureCarousel() {
                 className="min-w-full"
                 key={slide.title}
               >
-                <img
-                  alt={slide.alt}
-                  className="h-auto w-full"
-                  loading="lazy"
-                  src={slide.src}
-                />
+                {slide.webpSrc ? (
+                  <picture>
+                    <source
+                      srcSet={slide.webpSrc}
+                      type="image/webp"
+                    />
+                    <img
+                      alt={slide.alt}
+                      className="h-auto w-full"
+                      loading="lazy"
+                      src={slide.src}
+                    />
+                  </picture>
+                ) : (
+                  <img
+                    alt={slide.alt}
+                    className="h-auto w-full"
+                    loading="lazy"
+                    src={slide.src}
+                  />
+                )}
                 <figcaption className="border-t border-[var(--border-soft)] bg-[var(--bg-card)] px-4 py-3 text-sm text-[var(--text-secondary)]">
                   <span className="font-semibold text-[var(--text-primary)]">
                     {slide.title}:
