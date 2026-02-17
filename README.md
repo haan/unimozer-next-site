@@ -34,10 +34,12 @@ npm run check:links
 npm run images:process
 ```
 
-Current processing pipeline generates optimized carousel assets for the UML screenshot:
+Current processing pipeline generates optimized carousel assets:
 
 - `src/assets/screenshots/feature-uml-diagram.webp`
 - `src/assets/screenshots/feature-uml-diagram.jpg` (fallback for non-WebP browsers)
+- `src/assets/screenshots/feature-wizard.webp`
+- `src/assets/screenshots/feature-wizard.jpg` (fallback for non-WebP browsers)
 
 ## Build
 
@@ -58,7 +60,6 @@ Output is generated in `dist/` and can be hosted as static files.
 Update link labels and URLs in:
 
 - `src/data/downloads.ts`
-- `src/data/macResources.ts` (external macOS tutorial/video links)
 
 The link check script should be re-run after any changes:
 
@@ -71,11 +72,14 @@ npm run check:links
 Current screenshots are placeholders in:
 
 - `src/assets/screenshots/`
+- `src/assets/screenshots/sources/` (input images for processing)
 
 To replace them:
 
-1. Keep file names the same, or update imports in the related components.
-2. Keep meaningful alt text in components for accessibility.
+1. Replace source images in `src/assets/screenshots/sources/`.
+2. Run `npm run images:process`.
+3. Keep file names the same, or update imports in the related components.
+4. Keep meaningful alt text in components for accessibility.
 
 Related components:
 

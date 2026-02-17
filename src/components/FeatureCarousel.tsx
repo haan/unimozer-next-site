@@ -62,37 +62,17 @@ export function FeatureCarousel() {
   return (
     <section className="section-wrap">
       <div className="card">
-        <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="section-kicker">Screenshots</p>
-            <h2 className="section-title mt-2">Feature Highlights</h2>
-            <p className="section-subtitle mt-2">
-              See how diagrams, code, and object interaction work together.
-            </p>
-          </div>
-          <div className="flex gap-2">
-            <button
-              aria-label="Show previous feature screenshot"
-              className="btn-secondary"
-              onClick={showPrevious}
-              type="button"
-            >
-              Previous
-            </button>
-            <button
-              aria-label="Show next feature screenshot"
-              className="btn-secondary"
-              onClick={showNext}
-              type="button"
-            >
-              Next
-            </button>
-          </div>
+        <div className="mb-5">
+          <p className="section-kicker">Screenshots</p>
+          <h2 className="section-title mt-2">Feature Highlights</h2>
+          <p className="section-subtitle mt-2">
+            See how diagrams, code, and object interaction work together.
+          </p>
         </div>
 
         <div
           aria-label="Feature screenshot carousel"
-          className="overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-card-strong)]"
+          className="group relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-card-strong)]"
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") {
               showPrevious();
@@ -104,6 +84,54 @@ export function FeatureCarousel() {
           role="region"
           tabIndex={0}
         >
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 flex items-center pl-3 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100">
+            <button
+              aria-label="Show previous feature screenshot"
+              className="pointer-events-auto inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-[var(--border-strong)] bg-[rgba(10,17,22,0.8)] text-[var(--text-primary)] shadow-lg backdrop-blur-sm hover:border-[var(--accent)] hover:text-[var(--accent-strong)]"
+              onClick={showPrevious}
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15 6L9 12L15 18"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 flex items-center pr-3 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100">
+            <button
+              aria-label="Show next feature screenshot"
+              className="pointer-events-auto inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-[var(--border-strong)] bg-[rgba(10,17,22,0.8)] text-[var(--text-primary)] shadow-lg backdrop-blur-sm hover:border-[var(--accent)] hover:text-[var(--accent-strong)]"
+              onClick={showNext}
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M9 6L15 12L9 18"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
+              </svg>
+            </button>
+          </div>
+
           <div
             className="flex transition-transform duration-300 ease-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -155,7 +183,7 @@ export function FeatureCarousel() {
           {slides.map((slide, index) => (
             <button
               aria-label={`Jump to slide ${index + 1}: ${slide.title}`}
-              className={`h-2.5 w-8 rounded-full border ${
+              className={`h-2.5 w-8 cursor-pointer rounded-full border ${
                 index === currentIndex
                   ? "border-[var(--accent)] bg-[var(--accent)]"
                   : "border-[var(--border-soft)] bg-[var(--bg-card)]"
