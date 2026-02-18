@@ -8,7 +8,7 @@ export function Footer() {
               alt="Unimozer Next icon"
               className="h-8 w-8 rounded-lg border border-[var(--border-soft)] bg-[#0d171b] p-1"
               height={32}
-              src="/icon.png"
+              src="/icon_runtime.png"
               width={32}
             />
             <a

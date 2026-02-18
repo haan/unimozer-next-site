@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 
 const RUNTIME_ICON_SRC = "/icon_runtime.png";
-const FALLBACK_ICON_SRC = "/icon.png";
+const FALLBACK_ICON_SRC = "/icon_runtime.png";
 const RUNTIME_DEPTH_SRC = "/icon_depthmap_runtime.png";
 
 const DISPLACEMENT_STRENGTH = 0.032;

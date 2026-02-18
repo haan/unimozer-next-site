@@ -3,8 +3,8 @@ import sharp from "sharp";
 
 const RUNTIME_SIZE = 512;
 
-const ICON_SOURCE = "public/icon.png";
-const DEPTH_SOURCE = "public/icon_depthmap.png";
+const ICON_SOURCE = "src/assets/logo-sources/icon.png";
+const DEPTH_SOURCE = "src/assets/logo-sources/icon_depthmap.png";
 
 const ICON_OUTPUT = "public/icon_runtime.png";
 const DEPTH_OUTPUT = "public/icon_depthmap_runtime.png";

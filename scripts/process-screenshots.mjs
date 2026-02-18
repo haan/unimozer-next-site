@@ -17,7 +17,7 @@ const jobs = [
     input: "src/assets/screenshots/sources/feature-wizard.png",
     outputWebp: "src/assets/screenshots/feature-wizard.webp",
     outputJpeg: "src/assets/screenshots/feature-wizard.jpg",
-    extract: { left: 34, top: 281, width: 1200, height: 675 },
+    extract: { left: 64, top: 286, width: 1200, height: 675 },
     resize: { width: 1600, height: 900 },
     webp: { quality: 84, effort: 6 },
     jpeg: { quality: 86, mozjpeg: true },
