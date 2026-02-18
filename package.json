@@ -10,6 +10,7 @@
     "build": "tsc --noEmit && vite build",
     "link-check": "node scripts/check-links.mjs",
     "check:links": "npm run link-check",
+    "assets:logo": "node scripts/process-logo-assets.mjs",
     "images:process": "node scripts/process-screenshots.mjs",
     "preview": "vite preview"
   },

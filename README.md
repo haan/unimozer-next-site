@@ -86,6 +86,25 @@ Related components:
 - `src/components/FeatureCarousel.tsx`
 - `src/components/DownloadCards.tsx` (macOS tutorials/guides are in the macOS tab)
 
+## Runtime Logo Assets
+
+Logo parallax assets are generated from source files in `public/`:
+
+- Source files:
+  - `public/icon.png`
+  - `public/icon_depthmap.png` (depth source)
+- Generated runtime files:
+  - `public/icon_runtime.png`
+  - `public/icon_depthmap_runtime.png`
+
+Generate runtime assets with:
+
+```bash
+npm run assets:logo
+```
+
+The hero 3D logo effect expects these runtime files for best edge quality and performance.
+
 ## Branding Asset
 
-- Site icon is served from `public/icon.png`.
+- Site icon source is `public/icon.png`.

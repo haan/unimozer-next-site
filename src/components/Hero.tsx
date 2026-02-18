@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { DepthLogo } from "./DepthLogo";
 import { downloads } from "../data/downloads";
 import {
   getClientPlatformRecommendation,
@@ -88,13 +89,7 @@ export function Hero() {
           <div className="mx-auto">
             <div className="relative">
               <div className="pointer-events-none absolute inset-0 scale-105 rounded-full bg-[var(--accent-soft)] blur-3xl" />
-              <img
-                alt="Unimozer Next turtle icon"
-                className="relative h-56 w-56 object-contain drop-shadow-[0_14px_26px_rgba(0,0,0,0.45)] sm:h-64 sm:w-64"
-                height={256}
-                src="/icon.png"
-                width={256}
-              />
+              <DepthLogo />
             </div>
           </div>
         </div>
