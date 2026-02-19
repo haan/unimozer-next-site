@@ -172,19 +172,22 @@ export function DownloadCards() {
             </p>
             <p>
               For Unimozer Next, install location is important: put the app in{" "}
-              <code>~/Applications</code> to keep auto-update working reliably.
+              <code className="inline-path">~/Applications</code> to keep
+              auto-update working reliably.
             </p>
             <p>
               After opening the <code>.dmg</code>, open Finder and choose{" "}
               Go &gt; Go to Folder, enter{" "}
-              <code>~/Applications</code>, click Go, then drag Unimozer Next
-              into that folder.
+              <code className="inline-path">~/Applications</code>, click Go,
+              then drag Unimozer Next into that folder.
             </p>
             <p>
-              If Unimozer Next is already in <code>/Applications</code>, open{" "}
-              <code>/Applications</code> and <code>~/Applications</code> in two
-              Finder windows, then hold <code>Command</code> while dragging it
-              to move it.
+              If Unimozer Next is already in{" "}
+              <code className="inline-path">/Applications</code>, open{" "}
+              <code className="inline-path">/Applications</code> and{" "}
+              <code className="inline-path">~/Applications</code> in two Finder
+              windows, then hold <code>Command</code> while dragging it to move
+              it.
             </p>
             <div className="rounded-lg border border-[var(--border-soft)] bg-[var(--bg-card-strong)] p-4">
               <p className="font-semibold text-[var(--text-primary)]">
@@ -192,9 +195,10 @@ export function DownloadCards() {
               </p>
               <p className="mt-2">
                 Unimozer Next auto-updates can only be guaranteed when the app
-                runs from <code>~/Applications</code>. If it stays in{" "}
-                <code>/Applications</code>, macOS permission prompts can block
-                or interrupt updates.
+                runs from <code className="inline-path">~/Applications</code>.
+                If it stays in{" "}
+                <code className="inline-path">/Applications</code>, macOS
+                permission prompts can block or interrupt updates.
               </p>
             </div>
           </div>

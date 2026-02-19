@@ -106,4 +106,8 @@
     color: var(--text-secondary);
     @apply text-sm underline-offset-4 hover:text-[var(--text-primary)] hover:underline;
   }
+
+  .inline-path {
+    @apply whitespace-nowrap rounded bg-[var(--bg-card-strong)] px-1 py-0.5 font-mono text-[0.95em] text-[var(--text-primary)];
+  }
 }
