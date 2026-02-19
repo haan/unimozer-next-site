@@ -40,6 +40,10 @@ Current processing pipeline generates optimized carousel assets:
 - `src/assets/screenshots/feature-uml-diagram.jpg` (fallback for non-WebP browsers)
 - `src/assets/screenshots/feature-wizard.webp`
 - `src/assets/screenshots/feature-wizard.jpg` (fallback for non-WebP browsers)
+- `src/assets/screenshots/feature-structogram.webp`
+- `src/assets/screenshots/feature-structogram.jpg` (fallback for non-WebP browsers)
+- `src/assets/screenshots/feature-object-bench.webp`
+- `src/assets/screenshots/feature-object-bench.jpg` (fallback for non-WebP browsers)
 
 ## Build
 

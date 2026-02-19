@@ -22,6 +22,26 @@ const jobs = [
     webp: { quality: 84, effort: 6 },
     jpeg: { quality: 86, mozjpeg: true },
   },
+  {
+    name: "Structogram carousel image",
+    input: "src/assets/screenshots/sources/feature-structogram.png",
+    outputWebp: "src/assets/screenshots/feature-structogram.webp",
+    outputJpeg: "src/assets/screenshots/feature-structogram.jpg",
+    extract: { left: 0, top: 0, width: 1040, height: 585 },
+    resize: { width: 1600, height: 900 },
+    webp: { quality: 84, effort: 6 },
+    jpeg: { quality: 86, mozjpeg: true },
+  },
+  {
+    name: "Object bench carousel image",
+    input: "src/assets/screenshots/sources/feature-object-bench.png",
+    outputWebp: "src/assets/screenshots/feature-object-bench.webp",
+    outputJpeg: "src/assets/screenshots/feature-object-bench.jpg",
+    extract: { left: 0, top: 20, width: 1119, height: 629 },
+    resize: { width: 1600, height: 900 },
+    webp: { quality: 84, effort: 6 },
+    jpeg: { quality: 86, mozjpeg: true },
+  },
 ];
 
 function formatKb(bytes) {

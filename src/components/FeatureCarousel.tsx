@@ -1,6 +1,8 @@
 import { useState } from "react";
-import featureObjectBench from "../assets/screenshots/feature-object-bench.svg";
-import featureStructogram from "../assets/screenshots/feature-structogram.svg";
+import featureObjectBenchFallback from "../assets/screenshots/feature-object-bench.jpg";
+import featureObjectBench from "../assets/screenshots/feature-object-bench.webp";
+import featureStructogramFallback from "../assets/screenshots/feature-structogram.jpg";
+import featureStructogram from "../assets/screenshots/feature-structogram.webp";
 import featureUmlDiagramFallback from "../assets/screenshots/feature-uml-diagram.jpg";
 import featureUmlDiagram from "../assets/screenshots/feature-uml-diagram.webp";
 import featureWizardFallback from "../assets/screenshots/feature-wizard.jpg";
@@ -35,14 +37,16 @@ const slides: Slide[] = [
     title: "Structogram Method View",
     caption:
       "Algorithms can be explained step by step using a visual structogram for the selected method.",
-    src: featureStructogram,
+    src: featureStructogramFallback,
+    webpSrc: featureStructogram,
     alt: "Unimozer Next screenshot showing the structogram view for method flow planning.",
   },
   {
     title: "Object Bench Interaction",
     caption:
       "Learners can create objects and call methods to observe runtime behavior directly.",
-    src: featureObjectBench,
+    src: featureObjectBenchFallback,
+    webpSrc: featureObjectBench,
     alt: "Unimozer Next screenshot showing object bench interaction with object instances and method calls.",
   },
 ];
