@@ -63,7 +63,7 @@ Output is generated in `dist/` and can be hosted as static files.
 
 Update link labels and URLs in:
 
-- `src/data/downloads.ts`
+- `src/data/downloads.json`
 
 The link check script should be re-run after any changes:
 

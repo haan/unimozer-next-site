@@ -79,9 +79,11 @@ export function FeatureCarousel() {
           className="group relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[var(--bg-card-strong)]"
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") {
+              event.preventDefault();
               showPrevious();
             }
             if (event.key === "ArrowRight") {
+              event.preventDefault();
               showNext();
             }
           }}
@@ -140,8 +142,9 @@ export function FeatureCarousel() {
             className="flex transition-transform duration-300 ease-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-            {slides.map((slide) => (
+            {slides.map((slide, index) => (
               <figure
+                aria-hidden={index !== currentIndex}
                 className="min-w-full"
                 key={slide.title}
               >

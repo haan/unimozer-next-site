@@ -22,8 +22,31 @@ function detectMacArch(ua: string): MacArch {
   return "unknown";
 }
 
+function unsupportedMobileApplePlatform(
+  userAgent: string,
+  platform = "",
+  maxTouchPoints = 0
+) {
+  const ua = userAgent.toLowerCase();
+  const platformSignal = platform.toLowerCase();
+
+  return (
+    ua.includes("ipad") ||
+    (ua.includes("macintosh") && ua.includes("mobile")) ||
+    (platformSignal.includes("mac") && maxTouchPoints > 1)
+  );
+}
+
 export function detectPlatformFromUserAgent(userAgent: string): PlatformRecommendation {
   const ua = userAgent.toLowerCase();
+
+  if (unsupportedMobileApplePlatform(userAgent)) {
+    return {
+      platform: "other",
+      macArch: "unknown",
+      recommendedDownload: null,
+    };
+  }
 
   if (/(windows|win32|win64)/.test(ua)) {
     return {
@@ -98,10 +121,15 @@ export function getClientPlatformRecommendation(): PlatformRecommendation {
   const uaDataPlatform = nav.userAgentData?.platform?.toLowerCase() ?? "";
   const uaDataArch = nav.userAgentData?.architecture?.toLowerCase() ?? "";
   const navPlatform = navigator.platform?.toLowerCase() ?? "";
+  const maxTouchPoints = navigator.maxTouchPoints ?? 0;
 
   const archSignals = [uaString, uaDataArch, navPlatform]
     .filter(Boolean)
     .join(" ");
+
+  if (unsupportedMobileApplePlatform(uaString, navPlatform, maxTouchPoints)) {
+    return recommendationForPlatform("other", archSignals);
+  }
 
   // Prefer explicit client hints/user-agent over navigator.platform fallback.
   if (uaDataPlatform.includes("mac")) {

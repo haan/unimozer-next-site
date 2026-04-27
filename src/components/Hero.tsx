@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type MouseEvent } from "react";
 import { DepthLogo } from "./DepthLogo";
 import { downloads } from "../data/downloads";
 import {
@@ -9,6 +9,15 @@ const navLinks = [
   { href: "#downloads", label: "Downloads" },
   { href: "#it-admin", label: "IT Admin" },
 ];
+
+function navigateToHash(hash: string) {
+  if (window.location.hash.toLowerCase() === hash.toLowerCase()) {
+    window.dispatchEvent(new Event("hashchange"));
+    return;
+  }
+
+  window.location.hash = hash;
+}
 
 export function Hero() {
   const recommendation = useMemo(() => getClientPlatformRecommendation(), []);
@@ -28,6 +37,15 @@ export function Hero() {
             label: "Open Downloads",
             href: "#downloads",
           };
+
+  const handleHeroCtaClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (heroCta.href !== "#downloads-macos") {
+      return;
+    }
+
+    event.preventDefault();
+    navigateToHash(heroCta.href);
+  };
 
   return (
     <header className="section-wrap pt-5 sm:pt-8">
@@ -80,6 +98,7 @@ export function Hero() {
               <a
                 className="btn-primary"
                 href={heroCta.href}
+                onClick={handleHeroCtaClick}
               >
                 {heroCta.label}
               </a>

@@ -23,6 +23,9 @@ export function DownloadCards() {
   const [activeTab, setActiveTab] = useState<DownloadTab>(() =>
     recommendation.platform === "macos" ? "macos" : "windows"
   );
+  const [pendingScrollTarget, setPendingScrollTarget] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     const applyHashTab = () => {
@@ -30,11 +33,13 @@ export function DownloadCards() {
 
       if (hash === "#downloads-macos" || hash === "#downloads-panel-macos") {
         setActiveTab("macos");
+        setPendingScrollTarget("downloads-macos");
       } else if (
         hash === "#downloads-windows" ||
         hash === "#downloads-panel-windows"
       ) {
         setActiveTab("windows");
+        setPendingScrollTarget("downloads-windows");
       }
     };
 
@@ -45,6 +50,21 @@ export function DownloadCards() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!pendingScrollTarget) {
+      return;
+    }
+
+    const animationFrame = window.requestAnimationFrame(() => {
+      document.getElementById(pendingScrollTarget)?.scrollIntoView();
+      setPendingScrollTarget(null);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, [activeTab, pendingScrollTarget]);
+
   return (
     <section
       className="section-wrap"
@@ -54,13 +74,12 @@ export function DownloadCards() {
       <h2 className="section-title mt-2">Choose Your OS</h2>
 
       <div
-        aria-label="Operating system tabs"
+        aria-label="Operating system"
         className="mt-6 flex flex-wrap gap-2"
-        role="tablist"
       >
         <button
           aria-controls="downloads-windows"
-          aria-selected={activeTab === "windows"}
+          aria-pressed={activeTab === "windows"}
           className={
             activeTab === "windows"
               ? "btn-primary"
@@ -68,14 +87,13 @@ export function DownloadCards() {
           }
           id="downloads-tab-windows"
           onClick={() => setActiveTab("windows")}
-          role="tab"
           type="button"
         >
           Windows
         </button>
         <button
           aria-controls="downloads-macos"
-          aria-selected={activeTab === "macos"}
+          aria-pressed={activeTab === "macos"}
           className={
             activeTab === "macos"
               ? "btn-primary"
@@ -83,7 +101,6 @@ export function DownloadCards() {
           }
           id="downloads-tab-macos"
           onClick={() => setActiveTab("macos")}
-          role="tab"
           type="button"
         >
           macOS
@@ -91,12 +108,9 @@ export function DownloadCards() {
       </div>
 
       <div
-        aria-labelledby="downloads-tab-windows"
         className="mt-5"
         hidden={activeTab !== "windows"}
         id="downloads-windows"
-        role="tabpanel"
-        tabIndex={0}
       >
         <article className="rounded-xl border border-[var(--border-strong)] bg-[var(--bg-card)] p-5">
           <div className="mb-3 flex items-center justify-between gap-3">
@@ -130,12 +144,9 @@ export function DownloadCards() {
       </div>
 
       <div
-        aria-labelledby="downloads-tab-macos"
         className="mt-5"
         hidden={activeTab !== "macos"}
         id="downloads-macos"
-        role="tabpanel"
-        tabIndex={0}
       >
         <article className="rounded-xl border border-[var(--border-strong)] bg-[var(--bg-card)] p-5">
           <div className="mb-3 flex items-center justify-between gap-3">

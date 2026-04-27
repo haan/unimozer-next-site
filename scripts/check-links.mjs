@@ -1,27 +1,12 @@
-const requiredLinks = [
-  {
-    name: "Windows NSIS",
-    url: "https://github.com/haan/UnimozerNext/releases/latest/download/UnimozerNext_latest_x64-setup.exe",
-  },
-  {
-    name: "Windows MSI",
-    url: "https://github.com/haan/UnimozerNext/releases/latest/download/UnimozerNext_latest_x64-setup.msi",
-  },
-  {
-    name: "macOS Intel x64",
-    url: "https://github.com/haan/UnimozerNext/releases/latest/download/UnimozerNext_latest_x64.dmg",
-  },
-  {
-    name: "macOS Apple Silicon arm64",
-    url: "https://github.com/haan/UnimozerNext/releases/latest/download/UnimozerNext_latest_arm64.dmg",
-  },
-  {
-    name: "Latest release fallback",
-    url: "https://github.com/haan/UnimozerNext/releases/latest",
-  },
-];
+import { readFile } from "node:fs/promises";
+
+const downloadsConfigUrl = new URL("../src/data/downloads.json", import.meta.url);
 
 const timeoutMs = 20000;
+
+function isDownloadAsset(url) {
+  return new URL(url).pathname.includes("/releases/latest/download/");
+}
 
 async function fetchWithTimeout(url, options) {
   const controller = new AbortController();
@@ -36,6 +21,28 @@ async function fetchWithTimeout(url, options) {
   } finally {
     clearTimeout(timeoutId);
   }
+}
+
+async function checkWithGetFallback(target) {
+  const downloadAsset = isDownloadAsset(target.url);
+  const getResponse = await fetchWithTimeout(target.url, {
+    method: "GET",
+    headers: downloadAsset ? { Range: "bytes=0-0" } : undefined,
+  });
+
+  await getResponse.body?.cancel();
+
+  const ok = downloadAsset
+    ? getResponse.ok || getResponse.status === 206
+    : getResponse.ok;
+
+  return {
+    ...target,
+    ok,
+    method: downloadAsset ? "GET range 0-0" : "GET",
+    status: getResponse.status,
+    finalUrl: getResponse.url,
+  };
 }
 
 async function checkUrl(target) {
@@ -57,30 +64,13 @@ async function checkUrl(target) {
   }
 
   try {
-    const getResponse = await fetchWithTimeout(target.url, { method: "GET" });
-    if (getResponse.ok) {
-      return {
-        ...target,
-        ok: true,
-        method: "GET",
-        status: getResponse.status,
-        finalUrl: getResponse.url,
-      };
-    }
-
-    return {
-      ...target,
-      ok: false,
-      method: "GET",
-      status: getResponse.status,
-      finalUrl: getResponse.url,
-    };
+    return await checkWithGetFallback(target);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     return {
       ...target,
       ok: false,
-      method: "GET",
+      method: isDownloadAsset(target.url) ? "GET range 0-0" : "GET",
       status: 0,
       finalUrl: target.url,
       error: message,
@@ -88,7 +78,19 @@ async function checkUrl(target) {
   }
 }
 
+async function loadRequiredLinks() {
+  const configText = await readFile(downloadsConfigUrl, "utf8");
+  const downloads = JSON.parse(configText);
+
+  return Object.entries(downloads).map(([key, download]) => ({
+    name: `${download.label} (${key})`,
+    url: download.url,
+  }));
+}
+
 async function main() {
+  const requiredLinks = await loadRequiredLinks();
+
   console.log(`Checking ${requiredLinks.length} required URLs...`);
 
   const results = await Promise.all(requiredLinks.map((target) => checkUrl(target)));
