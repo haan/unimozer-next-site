@@ -1,6 +1,11 @@
-export type PlatformKind = "windows" | "macos" | "other";
+export type PlatformKind = "windows" | "macos" | "linux" | "other";
 export type MacArch = "arm64" | "x64" | "unknown";
-export type RecommendedDownload = "windowsNsis" | "macArm64" | "macX64" | null;
+export type RecommendedDownload =
+  | "windowsNsis"
+  | "macArm64"
+  | "macX64"
+  | "linuxApt"
+  | null;
 
 export interface PlatformRecommendation {
   platform: PlatformKind;
@@ -37,10 +42,14 @@ function unsupportedMobileApplePlatform(
   );
 }
 
+function unsupportedMobilePlatform(userAgent: string) {
+  return /(android|iphone|ipad|ipod|mobile|tablet)/i.test(userAgent);
+}
+
 export function detectPlatformFromUserAgent(userAgent: string): PlatformRecommendation {
   const ua = userAgent.toLowerCase();
 
-  if (unsupportedMobileApplePlatform(userAgent)) {
+  if (unsupportedMobileApplePlatform(userAgent) || unsupportedMobilePlatform(userAgent)) {
     return {
       platform: "other",
       macArch: "unknown",
@@ -62,6 +71,14 @@ export function detectPlatformFromUserAgent(userAgent: string): PlatformRecommen
       platform: "macos",
       macArch,
       recommendedDownload: macArch === "x64" ? "macX64" : "macArm64",
+    };
+  }
+
+  if (/(linux|x11)/.test(ua)) {
+    return {
+      platform: "linux",
+      macArch: "unknown",
+      recommendedDownload: "linuxApt",
     };
   }
 
@@ -100,6 +117,14 @@ function recommendationForPlatform(
     };
   }
 
+  if (platform === "linux") {
+    return {
+      platform: "linux",
+      macArch: "unknown",
+      recommendedDownload: "linuxApt",
+    };
+  }
+
   return {
     platform: "other",
     macArch: "unknown",
@@ -127,7 +152,10 @@ export function getClientPlatformRecommendation(): PlatformRecommendation {
     .filter(Boolean)
     .join(" ");
 
-  if (unsupportedMobileApplePlatform(uaString, navPlatform, maxTouchPoints)) {
+  if (
+    unsupportedMobileApplePlatform(uaString, navPlatform, maxTouchPoints) ||
+    unsupportedMobilePlatform(uaString)
+  ) {
     return recommendationForPlatform("other", archSignals);
   }
 
@@ -138,6 +166,9 @@ export function getClientPlatformRecommendation(): PlatformRecommendation {
   if (uaDataPlatform.includes("win")) {
     return recommendationForPlatform("windows", archSignals);
   }
+  if (uaDataPlatform.includes("linux")) {
+    return recommendationForPlatform("linux", archSignals);
+  }
 
   const uaLower = uaString.toLowerCase();
   if (/(macintosh|mac os x|macos)/.test(uaLower)) {
@@ -146,12 +177,18 @@ export function getClientPlatformRecommendation(): PlatformRecommendation {
   if (/(windows|win32|win64)/.test(uaLower)) {
     return recommendationForPlatform("windows", archSignals);
   }
+  if (/(linux|x11)/.test(uaLower)) {
+    return recommendationForPlatform("linux", archSignals);
+  }
 
   if (/mac/.test(navPlatform)) {
     return recommendationForPlatform("macos", archSignals);
   }
   if (/win/.test(navPlatform)) {
     return recommendationForPlatform("windows", archSignals);
+  }
+  if (/linux|x11/.test(navPlatform)) {
+    return recommendationForPlatform("linux", archSignals);
   }
 
   return recommendationForPlatform("other", archSignals);

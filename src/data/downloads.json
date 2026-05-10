@@ -15,6 +15,14 @@
     "label": "Download for Intel Mac",
     "url": "https://github.com/haan/UnimozerNext/releases/latest/download/UnimozerNext_latest_x64.dmg"
   },
+  "linuxAptKey": {
+    "label": "Download Linux Repository Key",
+    "url": "https://haan.github.io/UnimozerNext/apt/unimozer-next.gpg"
+  },
+  "linuxAptRelease": {
+    "label": "Open Linux APT Repository",
+    "url": "https://haan.github.io/UnimozerNext/apt/dists/stable/Release"
+  },
   "fallbackLatest": {
     "label": "Open Latest Release Page",
     "url": "https://github.com/haan/UnimozerNext/releases/latest"

@@ -10,6 +10,8 @@ export interface DownloadConfig {
   windowsMsi: DownloadLink;
   macArm64: DownloadLink;
   macX64: DownloadLink;
+  linuxAptKey: DownloadLink;
+  linuxAptRelease: DownloadLink;
   fallbackLatest: DownloadLink;
 }
 

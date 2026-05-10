@@ -33,13 +33,18 @@ export function Hero() {
             label: "Open macOS Downloads",
             href: "#downloads-macos",
           }
+        : recommendation.platform === "linux"
+          ? {
+              label: "Open Linux Downloads",
+              href: "#downloads-linux",
+            }
         : {
             label: "Open Downloads",
             href: "#downloads",
           };
 
   const handleHeroCtaClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (heroCta.href !== "#downloads-macos") {
+    if (heroCta.href !== "#downloads-macos" && heroCta.href !== "#downloads-linux") {
       return;
     }
 
